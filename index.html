@@ -1,242 +1,441 @@
-</html>
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio de Certificaciones - Emmanuel Ortiz Reyes</title>
+    <title>Portfolio - Emmanuel Ortiz Reyes</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --background-color: #f8fafc;
-            --card-background: #ffffff;
-            --text-color: #1f2937;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --accent-color: #3b82f6;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --accent-primary: #00ffff;
+            --accent-secondary: #ff0080;
+            --accent-tertiary: #8000ff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
             line-height: 1.6;
         }
 
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 3rem 1rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .header-background {
-            position: absolute;
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.1;
-            background:
-                radial-gradient(circle at 20% 50%, var(--accent-color) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, var(--secondary-color) 0%, transparent 50%);
+            z-index: -1;
+            background: radial-gradient(ellipse at center, #111 0%, #000 100%);
         }
 
-        .header-content h1 {
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(128, 0, 255, 0.1) 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+            transform-origin: center center;
         }
 
-        .header-content p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 0.5rem;
-        }
-
-        .nombre {
-            font-weight: 600;
-            font-size: 1.4rem;
-            margin-top: 1rem;
-            color: #fff;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 0.5rem;
-            backdrop-filter: blur(5px);
-        }
-
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 0.2rem;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .categorias {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .categoria {
-            margin-bottom: 3rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        @keyframes backgroundShift {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg); 
+            }
+            25% { 
+                transform: scale(1.2) rotate(90deg); 
+            }
+            50% { 
+                transform: scale(1.1) rotate(180deg); 
+            }
+            75% { 
+                transform: scale(1.3) rotate(270deg); 
             }
         }
 
-        .categoria-titulo {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-color);
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            animation: float 10s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            height: 100vh;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-        }
-
-        .categoria-titulo i {
-            background: var(--primary-color);
-            color: white;
-            padding: 0.5rem;
-            border-radius: 50%;
-            font-size: 1rem;
-        }
-
-        .certificados {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .certificado {
-            background: var(--card-background);
-            border-radius: 1rem;
+            justify-content: center;
+            text-align: center;
             overflow: hidden;
-            box-shadow: var(--shadow);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradientShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(30deg); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .hero-name {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(0, 255, 255, 0.8); }
+        }
+
+        /* Stats */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
             transition: all 0.3s ease;
             position: relative;
+            overflow: hidden;
         }
 
-        .certificado:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.2);
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
         }
 
-        .certificado::before {
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 6rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 2px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .cert-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cert-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: translateX(-100%);
-            transition: 0.6s;
+            background: linear-gradient(45deg, 
+                rgba(0, 255, 255, 0.1) 0%, 
+                rgba(255, 0, 128, 0.1) 50%, 
+                rgba(128, 0, 255, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .certificado:hover::before {
-            transform: translateX(100%);
+        .cert-card:hover::before {
+            opacity: 1;
         }
 
-        .certificado-imagen {
+        .cert-card:hover {
+            transform: translateY(-20px) rotateX(5deg);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.3),
+                0 0 50px rgba(0, 255, 255, 0.2);
+        }
+
+        .cert-image {
             position: relative;
-            padding-top: 75%;
+            height: 250px;
             overflow: hidden;
         }
 
-        .certificado-imagen img {
+        .cert-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            filter: brightness(0.8);
+        }
+
+        .cert-card:hover .cert-image img {
+            transform: scale(1.1);
+            filter: brightness(1);
+        }
+
+        .cert-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
+            background: linear-gradient(
+                135deg, 
+                rgba(0, 255, 255, 0.3) 0%, 
+                rgba(255, 0, 128, 0.3) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .certificado:hover .certificado-imagen img {
-            transform: scale(1.05);
+        .cert-card:hover .cert-overlay {
+            opacity: 1;
         }
 
-        .certificado-info {
+        .expand-icon {
+            color: white;
+            font-size: 2rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .cert-info {
             padding: 1.5rem;
-            background: linear-gradient(to top, var(--card-background), transparent);
         }
 
-        .certificado-titulo {
-            font-size: 1.1rem;
+        .cert-title {
+            font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
-            color: var(--text-color);
+            color: var(--text-primary);
         }
 
-        .certificado-fecha {
+        .cert-date {
+            color: var(--text-secondary);
             font-size: 0.9rem;
-            color: #6b7280;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .certificado-fecha i {
+        .cert-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
             font-size: 0.8rem;
-            color: var(--primary-color);
+            font-weight: 600;
+            z-index: 2;
         }
 
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -245,115 +444,151 @@
             opacity: 1;
         }
 
-        .modal-contenido {
+        .modal-content {
             max-width: 90%;
-            max-height: 90vh;
-            margin: auto;
-            display: block;
-            transform: scale(0.9);
+            max-height: 90%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 100px rgba(0, 255, 255, 0.3);
+            transform: scale(0.8);
             transition: transform 0.3s ease;
         }
 
-        .modal.active .modal-contenido {
+        .modal.active .modal-content {
             transform: scale(1);
         }
 
-        .cerrar {
+        .modal-close {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
+            top: 2rem;
+            right: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 1rem;
             border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
             transition: all 0.3s ease;
+            z-index: 2001;
         }
 
-        .cerrar:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .modal-close:hover {
+            background: var(--accent-secondary);
             transform: rotate(90deg);
         }
 
-        @media (max-width: 768px) {
-            .certificados {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-
-            .stats {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: center;
-            }
-
-            .stat-item {
-                width: 80%;
-            }
-
-            .header-content h1 {
-                font-size: 2rem;
-            }
-        }
-
-        footer {
-            background: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
-
-        .scroll-to-top {
+        /* Scroll Indicator */
+        .scroll-indicator {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--primary-color);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
         }
 
-        .scroll-to-top.visible {
-            opacity: 1;
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            transition: width 0.1s ease;
         }
 
-        .scroll-to-top:hover {
-            transform: translateY(-3px);
-            background: var(--secondary-color);
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 3rem 1rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stats-container {
+                gap: 1rem;
+            }
+
+            .stat-card {
+                min-width: 120px;
+            }
+
+            nav {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .nav-btn {
+                width: 40px;
+                height: 40px;
+                padding: 0.6rem;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, var(--accent-secondary), var(--accent-tertiary));
         }
     </style>
 </head>
 
 <body>
+    <div class="animated-bg"></div>
+    
+    <div class="particles" id="particles"></div>
+    
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <nav>
+        <button class="nav-btn" onclick="scrollToTop()" title="Inicio">
+            <i class="fas fa-home"></i>
+        </button>
+        <button class="nav-btn" onclick="scrollToSection('certifications')" title="Certificaciones">
+            <i class="fas fa-certificate"></i>
+        </button>
+        <button class="nav-btn" onclick="scrollToSection('contact')" title="Contacto">
+            <i class="fas fa-envelope"></i>
+        </button>
+    </nav>
+
     <header>
-        <div class="header-background"></div>
-        <div class="header-content">
-            <h1><i class="fas fa-award"></i> Portafolio de Certificaciones</h1>
-            <p>Documentación de mi desarrollo profesional y académico</p>
-            <p class="nombre">Emmanuel Ortiz Reyes</p>
-            <div class="stats">
-                <div class="stat-item">
+        <div class="hero-content">
+            <h1 class="hero-title">PORTFOLIO</h1>
+            <p class="hero-subtitle">Certificaciones & Logros Académicos</p>
+            <p class="hero-name">Emmanuel Ortiz Reyes</p>
+            
+            <div class="stats-container">
+                <div class="stat-card">
                     <div class="stat-number">7</div>
                     <div class="stat-label">Certificaciones</div>
                 </div>
-                <div class="stat-item">
+                <div class="stat-card">
                     <div class="stat-number">9.9</div>
-                    <div class="stat-label">Promedio Académico</div>
+                    <div class="stat-label">Promedio</div>
                 </div>
-                <div class="stat-item">
+                <div class="stat-card">
                     <div class="stat-number">3</div>
                     <div class="stat-label">Reconocimientos</div>
                 </div>
@@ -361,216 +596,355 @@
         </div>
     </header>
 
-    <main>
-        <section class="categorias">
-            <div class="categoria">
-                <h2 class="categoria-titulo">
-                    <i class="fas fa-desktop"></i> Certificaciones UX/UI
-                </h2>
-                <div class="certificados">
-                    <div class="certificado"
-                        onclick="mostrarModal('img/Primeros pasos en el proceso de diseño de UX Empatizar, definir e idear_page-0001.jpg')">
-                        <div class="certificado-imagen">
-                            <img src="img/Primeros pasos en el proceso de diseño de UX Empatizar, definir e idear_page-0001.jpg"
-                                alt="UX Design Process">
-                        </div>
-                        <div class="certificado-info">
-                            <h3 class="certificado-titulo">Proceso de Diseño UX</h3>
-                            <p class="certificado-fecha">Coursera - 2024</p>
+    <main id="certifications">
+        <section class="section">
+            <h2 class="section-title">UX/UI Design</h2>
+            <div class="cards-grid">
+                <div class="cert-card" onclick="openModal('img/Primeros pasos en el proceso de diseño de UX Empatizar, definir e idear_page-0001.jpg')">
+                    <div class="cert-badge">UX</div>
+                    <div class="cert-image">
+                        <img src="img/Primeros pasos en el proceso de diseño de UX Empatizar, definir e idear_page-0001.jpg" alt="UX Process">
+                        <div class="cert-overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
                     </div>
-                    <div class="certificado"
-                        onclick="mostrarModal('img/Aspectos básicos del diseño de la experiencia del usuario_page-0001.jpg')">
-                        <div class="certificado-imagen">
-                            <img src="img/Aspectos básicos del diseño de la experiencia del usuario_page-0001.jpg"
-                                alt="UX Design Basics">
-                        </div>
-                        <div class="certificado-info">
-                            <h3 class="certificado-titulo">Fundamentos de UX</h3>
-                            <p class="certificado-fecha">Coursera - 2024</p>
+                    <div class="cert-info">
+                        <h3 class="cert-title">Proceso de Diseño UX</h3>
+                        <p class="cert-date">
+                            <i class="fas fa-calendar"></i>
+                            Coursera - 2024
+                        </p>
+                    </div>
+                </div>
+
+                <div class="cert-card" onclick="openModal('img/Aspectos básicos del diseño de la experiencia del usuario_page-0001.jpg')">
+                    <div class="cert-badge">UX</div>
+                    <div class="cert-image">
+                        <img src="img/Aspectos básicos del diseño de la experiencia del usuario_page-0001.jpg" alt="UX Basics">
+                        <div class="cert-overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
                     </div>
-                    <div class="certificado"
-                        onclick="mostrarModal('img/Crear esquemas de página y prototipos de baja fidelidad_page-0001.jpg')">
-                        <div class="certificado-imagen">
-                            <img src="img/Crear esquemas de página y prototipos de baja fidelidad_page-0001.jpg"
-                                alt="Low Fidelity Prototypes">
+                    <div class="cert-info">
+                        <h3 class="cert-title">Fundamentos de UX</h3>
+                        <p class="cert-date">
+                            <i class="fas fa-calendar"></i>
+                            Coursera - 2024
+                        </p>
+                    </div>
+                </div>
+
+                <div class="cert-card" onclick="openModal('img/Crear esquemas de página y prototipos de baja fidelidad_page-0001.jpg')">
+                    <div class="cert-badge">UX</div>
+                    <div class="cert-image">
+                        <img src="img/Crear esquemas de página y prototipos de baja fidelidad_page-0001.jpg" alt="Prototyping">
+                        <div class="cert-overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
-                        <div class="certificado-info">
-                            <h3 class="certificado-titulo">Prototipado de Baja Fidelidad</h3>
-                            <p class="certificado-fecha">Coursera - 2024</p>
-                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <h3 class="cert-title">Prototipado de Baja Fidelidad</h3>
+                        <p class="cert-date">
+                            <i class="fas fa-calendar"></i>
+                            Coursera - 2024
+                        </p>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="categoria">
-                <h2 class="categoria-titulo">
-                    <i class="fas fa-code"></i> Certificaciones Técnicas
-                </h2>
-                <div class="certificados">
-                    <div class="certificado" onclick="mostrarModal('img/NDG Linux Essentials_page-0001.jpg')">
-                        <div class="certificado-imagen">
-                            <img src="img/NDG Linux Essentials_page-0001.jpg" alt="Linux Essentials">
-                        </div>
-                        <div class="certificado-info">
-                            <h3 class="certificado-titulo">NDG Linux Essentials</h3>
-                            <p class="certificado-fecha">Netacad - 2024</p>
+        <section class="section">
+            <h2 class="section-title">Certificaciones Técnicas</h2>
+            <div class="cards-grid">
+                <div class="cert-card" onclick="openModal('img/NDG Linux Essentials_page-0001.jpg')">
+                    <div class="cert-badge">Linux</div>
+                    <div class="cert-image">
+                        <img src="img/NDG Linux Essentials_page-0001.jpg" alt="Linux">
+                        <div class="cert-overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
                     </div>
+                    <div class="cert-info">
+                        <h3 class="cert-title">NDG Linux Essentials</h3>
+                        <p class="cert-date">
+                            <i class="fas fa-calendar"></i>
+                            Netacad - 2024
+                        </p>
+                    </div>
+                </div>
 
-                    <div class="certificado" onclick="mostrarModal('img/SR.jpg')">
-                        <div class="certificado-imagen">
-                            <img src="img/SR.jpg" alt="Linux Essentials">
-                        </div>
-                        <div class="certificado-info">
-                            <h3 class="certificado-titulo">Introduction to Networks</h3>
-                            <p class="certificado-fecha">Netacad - 2024</p>
+                <div class="cert-card" onclick="openModal('img/SR.jpg')">
+                    <div class="cert-badge">Networks</div>
+                    <div class="cert-image">
+                        <img src="img/SR.jpg" alt="Networks">
+                        <div class="cert-overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
                     </div>
+                    <div class="cert-info">
+                        <h3 class="cert-title">Introduction to Networks</h3>
+                        <p class="cert-date">
+                            <i class="fas fa-calendar"></i>
+                            Netacad - 2024
+                        </p>
+                    </div>
+                </div>
 
-                    <div class="certificado" onclick="mostrarModal('img/IN.jpg')">
-                        <div class="certificado-imagen">
-                            <img src="img/IN.jpg" alt="Linux Essentials">
-                        </div>
-                        <div class="certificado-info">
-                            <h3 class="certificado-titulo">Switching, Routing, and Wireless Essentials</h3>
-                            <p class="certificado-fecha">Netacad - 2024</p>
+                <div class="cert-card" onclick="openModal('img/IN.jpg')">
+                    <div class="cert-badge">Routing</div>
+                    <div class="cert-image">
+                        <img src="img/IN.jpg" alt="Routing">
+                        <div class="cert-overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
                     </div>
+                    <div class="cert-info">
+                        <h3 class="cert-title">Switching, Routing & Wireless</h3>
+                        <p class="cert-date">
+                            <i class="fas fa-calendar"></i>
+                            Netacad - 2024
+                        </p>
+                    </div>
+                </div>
 
-                    <div class="certificado" onclick="mostrarModal('img/solicitud_titulacion_23001548_120302.jpg')">
-                        <div class="certificado-imagen">
-                            <img src="img/solicitud_titulacion_23001548_120302.jpg" alt="Certificado Técnico Superior">
+                <div class="cert-card" onclick="openModal('img/solicitud_titulacion_23001548_120302.jpg')">
+                    <div class="cert-badge">Degree</div>
+                    <div class="cert-image">
+                        <img src="img/solicitud_titulacion_23001548_120302.jpg" alt="Degree">
+                        <div class="cert-overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
-                        <div class="certificado-info">
-                            <h3 class="certificado-titulo">Solicitud de Titulación</h3>
-                            <p class="certificado-fecha">Universidad Tecnológica de León - 2025</p>
-                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <h3 class="cert-title">Solicitud de Titulación</h3>
+                        <p class="cert-date">
+                            <i class="fas fa-calendar"></i>
+                            UTL - 2025
+                        </p>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="categoria">
-                <h2 class="categoria-titulo">
-                    <i class="fas fa-language"></i> Certificaciones de Idiomas
-                </h2>
-                <div class="certificados">
-                    <div class="certificado" onclick="mostrarModal('img/toefl.jpg')">
-                        <div class="certificado-imagen">
-                            <img src="img/toefl.jpg" alt="TOEFL Certificate">
+        <section class="section">
+            <h2 class="section-title">Idiomas & Reconocimientos</h2>
+            <div class="cards-grid">
+                <div class="cert-card" onclick="openModal('img/toefl.jpg')">
+                    <div class="cert-badge">B2</div>
+                    <div class="cert-image">
+                        <img src="img/toefl.jpg" alt="TOEFL">
+                        <div class="cert-overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
-                        <div class="certificado-info">
-                            <h3 class="certificado-titulo">TOEFL B2</h3>
-                            <p class="certificado-fecha">UTL - 2024</p>
-                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <h3 class="cert-title">TOEFL B2</h3>
+                        <p class="cert-date">
+                            <i class="fas fa-calendar"></i>
+                            UTL - 2024
+                        </p>
                     </div>
                 </div>
-            </div>
 
-            <div class="categoria">
-                <h2 class="categoria-titulo">
-                    <i class="fas fa-star"></i> Reconocimientos Académicos
-                </h2>
-                <div class="certificados">
-                    <div class="certificado" onclick="mostrarModal('img/9.9.jpg')">
-                        <div class="certificado-imagen">
-                            <img src="img/9.9.jpg" alt="9.9 GPA">
-                        </div>
-                        <div class="certificado-info">
-                            <h3 class="certificado-titulo">Promedio 9.9</h3>
-                            <p class="certificado-fecha">UTL - 2024</p>
+                <div class="cert-card" onclick="openModal('img/9.9.jpg')">
+                    <div class="cert-badge">9.9</div>
+                    <div class="cert-image">
+                        <img src="img/9.9.jpg" alt="9.9 GPA">
+                        <div class="cert-overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
                     </div>
-                    <div class="certificado" onclick="mostrarModal('img/9.8.jpg')">
-                        <div class="certificado-imagen">
-                            <img src="img/9.8.jpg" alt="9.8 GPA">
-                        </div>
-                        <div class="certificado-info">
-                            <h3 class="certificado-titulo">Promedio 9.8</h3>
-                            <p class="certificado-fecha">UTL - 2024</p>
+                    <div class="cert-info">
+                        <h3 class="cert-title">Excelencia Académica</h3>
+                        <p class="cert-date">
+                            <i class="fas fa-calendar"></i>
+                            UTL - 2024
+                        </p>
+                    </div>
+                </div>
+
+                <div class="cert-card" onclick="openModal('img/9.8.jpg')">
+                    <div class="cert-badge">9.8</div>
+                    <div class="cert-image">
+                        <img src="img/9.8.jpg" alt="9.8 GPA">
+                        <div class="cert-overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
                     </div>
-                    <div class="certificado" onclick="mostrarModal('img/sntss.jpg')">
-                        <div class="certificado-imagen">
-                            <img src="img/sntss.jpg" alt="SNTSS Recognition">
+                    <div class="cert-info">
+                        <h3 class="cert-title">Alto Rendimiento</h3>
+                        <p class="cert-date">
+                            <i class="fas fa-calendar"></i>
+                            UTL - 2024
+                        </p>
+                    </div>
+                </div>
+
+                <div class="cert-card" onclick="openModal('img/sntss.jpg')">
+                    <div class="cert-badge">SNTSS</div>
+                    <div class="cert-image">
+                        <img src="img/sntss.jpg" alt="SNTSS">
+                        <div class="cert-overlay">
+                            <i class="fas fa-expand-alt expand-icon"></i>
                         </div>
-                        <div class="certificado-info">
-                            <h3 class="certificado-titulo">Reconocimiento SNTSS</h3>
-                            <p class="certificado-fecha">SNTSS - 2024</p>
-                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <h3 class="cert-title">Reconocimiento SNTSS</h3>
+                        <p class="cert-date">
+                            <i class="fas fa-calendar"></i>
+                            SNTSS - 2024
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <p>© 2025 Emmanuel Ortiz Reyes - Portafolio de Certificaciones</p>
+    <footer id="contact">
+        <p>© 2025 Emmanuel Ortiz Reyes - Portfolio de Certificaciones</p>
+        <p style="margin-top: 1rem; color: var(--text-secondary);">
+            Diseño innovador con tecnologías web modernas
+        </p>
     </footer>
 
-    <div class="scroll-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-
-    <div id="modal" class="modal" onclick="cerrarModal()">
-        <span class="cerrar">&times;</span>
-        <img class="modal-contenido" id="imgModal">
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-close" onclick="closeModal()">
+            <i class="fas fa-times"></i>
+        </div>
+        <img class="modal-content" id="modalImg" alt="Certificado">
     </div>
 
     <script>
-        function mostrarModal(imagen) {
-            const modal = document.getElementById("modal");
-            const imgModal = document.getElementById("imgModal");
-            imgModal.src = imagen;
-            modal.style.display = "flex";
-            setTimeout(() => modal.classList.add('active'), 10);
-            document.body.style.overflow = "hidden";
+        // Particles Animation
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                
+                // Random colors
+                const colors = ['var(--accent-primary)', 'var(--accent-secondary)', 'var(--accent-tertiary)'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
         }
 
-        function cerrarModal() {
-            const modal = document.getElementById("modal");
+        // Scroll Progress
+        function updateScrollProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+        }
+
+        // Intersection Observer for animations
+        function setupScrollAnimations() {
+            const sections = document.querySelectorAll('.section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => observer.observe(section));
+        }
+
+        // Modal functions
+        function openModal(imageSrc) {
+            const modal = document.getElementById('modal');
+            const modalImg = document.getElementById('modalImg');
+            
+            modalImg.src = imageSrc;
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
             modal.classList.remove('active');
             setTimeout(() => {
-                modal.style.display = "none";
-                document.body.style.overflow = "auto";
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
             }, 300);
         }
 
-        // Cerrar modal con la tecla ESC
-        document.addEventListener('keydown', function (event) {
-            if (event.key === "Escape") {
-                cerrarModal();
-            }
-        });
-
-        const scrollBtn = document.querySelector('.scroll-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollBtn.classList.add('visible');
-            } else {
-                scrollBtn.classList.remove('visible');
-            }
-        });
-
-        scrollBtn.addEventListener('click', () => {
+        // Navigation functions
+        function scrollToTop() {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
+        }
+
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
         });
 
+        // Mouse parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            const bg = document.querySelector('.animated-bg::before');
+            if (bg) {
+                document.documentElement.style.setProperty('--mouse-x', mouseX);
+                document.documentElement.style.setProperty('--mouse-y', mouseY);
+            }
+        });
+
+        // Initialize everything
         document.addEventListener('DOMContentLoaded', () => {
-            const categorias = document.querySelectorAll('.categoria');
-            let delay = 0;
-            categorias.forEach(categoria => {
-                categoria.style.animationDelay = `${delay}s`;
-                delay += 0.2;
+            createParticles();
+            setupScrollAnimations();
+            
+            // Scroll event listeners
+            window.addEventListener('scroll', updateScrollProgress);
+            
+            // Modal click outside to close
+            document.getElementById('modal').addEventListener('click', (e) => {
+                if (e.target.id === 'modal') {
+                    closeModal();
+                }
+            });
+
+            // Add staggered animation delays to cards
+            const cards = document.querySelectorAll('.cert-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = (index * 0.1) + 's';
             });
         });
+
+        // Performance optimization: Throttle scroll events
+        let ticking = false;
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateScrollProgress);
+                ticking = true;
+                setTimeout(() => ticking = false, 16);
+            }
+        }
+        window.addEventListener('scroll', requestTick);
     </script>
 </body>
-
 </html>
-
-
